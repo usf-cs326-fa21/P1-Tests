@@ -44,6 +44,52 @@ subtest("Predefined CPU usages, simulated by dynamically generating /proc/stat "
         33.502538,
     };
 
+    unsigned long expected_usage[] = {
+        963493,
+        963673,
+        963987,
+        964317,
+        965050,
+        965369,
+        965450,
+        965453,
+        965833,
+        966860,
+        967879,
+        968080,
+        969553,
+        969710,
+        970062,
+        60,
+        963493,
+        963673,
+        963987,
+        964317,
+    };
+
+    unsigned long expected_idle[] = {
+        317155700,
+        317156589,
+        317157206,
+        317157861,
+        317158342,
+        317159237,
+        317162501,
+        317163403,
+        317167873,
+        317168803,
+        317169662,
+        317169817,
+        317203823,
+        317203823,
+        317203823,
+        40,
+        317155700,
+        317156589,
+        317157206,
+        317157861,
+    };
+
     vp_initialize();
     vp_on();
     struct cpu_stats prev_cpu = { 0 };
@@ -57,6 +103,14 @@ subtest("Predefined CPU usages, simulated by dynamically generating /proc/stat "
         test_assert((fabs(curr_cpu.usage_perc - expected_percentages[i]) < 0.0001));
         test_printf("%.2f", curr_cpu.usage_perc);
         test_printf("%.2f", expected_percentages[i]);
+
+        test_assert(curr_cpu.usage == expected_usage[i]);
+        test_printf("%lu", curr_cpu.usage);
+        test_printf("%lu", expected_usage[i]);
+
+        test_assert(curr_cpu.idle == expected_idle[i]);
+        test_printf("%lu", curr_cpu.idle);
+        test_printf("%lu", expected_idle[i]);
 
         prev_cpu = curr_cpu;
     }
