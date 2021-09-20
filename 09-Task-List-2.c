@@ -11,10 +11,10 @@
 #include "util.h"
 
 struct task_info expected_tasks[] = {
-    { 218,   0, "virtlogd", 'D' },
-    { 817,   0, "stress",   'R' },
-    { 902,   0, "virtlogd", 'D' },
-    { 4490,  0, "virtlogd", 'T' },
+    { 218,   1041, "virtlogd", 'D' },
+    { 817,   1000, "stress",   'R' },
+    { 902,   1041, "virtlogd", 'D' },
+    { 4490,  1404, "virtlogd", 'T' },
     { 7079,  0, "ccp-7-q2", 'R' },
     { 11131, 0, "kworker/16:1H", 'D' },
     { 78241, 0, "nfsv4.1-svc",   'T' },
@@ -61,8 +61,14 @@ subtest("Comparing against fake procfs test set",
         test_assert(tstats->tasks[i].pid == expected_tasks[i].pid);
         test_printf("%d", tstats->tasks[i].pid);
         test_printf("%d", expected_tasks[i].pid);
+
+        test_assert(tstats->tasks[i].uid == expected_tasks[i].uid);
+        test_printf("%d", tstats->tasks[i].uid);
+        test_printf("%d\n", expected_tasks[i].uid);
+
         test_assert_str(tstats->tasks[i].name, "==", expected_tasks[i].name, 500);
         test_printf("'%s'", tstats->tasks[i].name);
+
         test_assert(tstats->tasks[i].state == expected_tasks[i].state);
         test_printf("%c", tstats->tasks[i].state);
         test_printf("%c", expected_tasks[i].state);
