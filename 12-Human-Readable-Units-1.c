@@ -38,9 +38,10 @@ subtest("Comparing output against known values",
     test_assert_str(buf, "==", "2.7 GiB", 500);
     test_printf("%s\n", buf);
 
-    human_readable_size(buf, 128, 472877960873902080, 1);
-    test_assert_str(buf, "==", "420.0 ZiB", 500);
-    test_printf("%s\n", buf);
+    // disabling incorrect test case (fa '21): should be EiB here, not ZiB!
+//    human_readable_size(buf, 128, 472877960873902080, 1);
+//    test_assert_str(buf, "==", "420.0 ZiB", 500);
+//    test_printf("%s\n", buf);
 
     human_readable_size(buf, 128, 129049729231119, 2);
     test_assert_str(buf, "==", "117.37 PiB", 500);
